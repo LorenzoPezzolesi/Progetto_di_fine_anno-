@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>UNO</title>
+        <style>
+            body {
+                height: 100dvh;
+            }
+
+            div:first-child {
+                text-align: center;
+            }
+
+            div:last-child {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <p>L'avversario ha {{ enemy_cards_count }} carte</p>
+        </div>
+        <div>
+            <form action="GET">
+                <img src="" alt="">
+                <input type="submit" value="Pesca dal mazzo"/>
+            </form>
+        </div>
+        <div>
+            <p>{{ last_played_card }}</p>
+        </div>
+        <div>
+            <form action="POST">
+                <img src="" alt="">
+                <input type="submit" value="{{ player_cards[0] }}" name="played_card">
+                <img src="" alt="">
+                <input type="submit" value="{{ player_cards[1] }}" name="played_card">
+                <input type="submit" value="{{ player_cards[2] }}" name="played_card">
+                <input type="submit" value="{{ player_cards[3] }}" name="played_card">
+                <input type="submit" value="{{ player_cards[4] }}" name="played_card">
+                <input type="submit" value="{{ player_cards[5] }}" name="played_card">
+                <input type="submit" value="{{ player_cards[6] }}" name="played_card">
+            </form>
+        </div>
+    </body>
+</html>
