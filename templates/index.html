@@ -23,8 +23,9 @@
             <p>L'avversario ha {{ enemy_cards_count }} carte</p>
         </div>
         <div>
-            <form action="GET">
+            <form method="GET" action="/">
                 <img src="" alt="">
+                <input type="hidden" name="action" value="draw"/>
                 <input type="submit" value="Pesca dal mazzo"/>
             </form>
         </div>
@@ -32,16 +33,11 @@
             <p>{{ last_played_card }}</p>
         </div>
         <div>
-            <form action="POST">
-                <img src="" alt="">
-                <input type="submit" value="{{ player_cards[0] }}" name="played_card">
-                <img src="" alt="">
-                <input type="submit" value="{{ player_cards[1] }}" name="played_card">
-                <input type="submit" value="{{ player_cards[2] }}" name="played_card">
-                <input type="submit" value="{{ player_cards[3] }}" name="played_card">
-                <input type="submit" value="{{ player_cards[4] }}" name="played_card">
-                <input type="submit" value="{{ player_cards[5] }}" name="played_card">
-                <input type="submit" value="{{ player_cards[6] }}" name="played_card">
+            <form method="POST" action="/">
+                {% for card in player_cards %}
+                    <img src="" alt="">
+                    <input type="submit" value="{{ card }}" name="played_card" style="background-color: red;">
+                {% endfor %}
             </form>
         </div>
     </body>
