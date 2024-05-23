@@ -7,6 +7,8 @@
         <style>
             body {
                 height: 100dvh;
+                background-image: url('imgs/bg.jpg');
+                background-size: cover;
             }
 
             div:first-child {
@@ -16,27 +18,123 @@
             div:last-child {
                 text-align: center;
             }
+
+            .opponent-hand {
+                font-size: larger;
+                font-weight: bold;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                justify-content: center;
+            }
+
+            .opponent-hand > img,
+            .deck > form > img {
+                flex: 0 0 80px;
+                width: 80px;
+                object-fit: scale-down;
+            }
+
+            .opponent-hand > p {
+                flex: 1 1 9999px;
+            }
+
+            .deck > form {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .deck > form > input {
+                flex: 0 0;
+                width: 160px;
+            }
+
+            .played-card {
+                width: 150px;
+                height: 200px;
+                margin-inline: auto;
+            }
+
+            .played-card > img {
+                width: 150px;
+                height: 200px;
+                object-fit: scale-down;
+            }
+
+            .player-actions {
+                justify-content: end;
+                display: flex;
+                gap: 4px;
+
+            }
+
+            .player-hand {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                justify-content: center;
+                margin-top: 16px;
+            }
+
+            .player-hand > input {
+                width: 120px;
+                height: 180px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                color: transparent;
+            }
+
+            .player-hand > input:disabled {
+                opacity: 0.2;
+            }
         </style>
     </head>
     <body>
-        <div>
+        <div class="opponent-hand">
+            {% for i in range(enemy_cards_count) %}
+                <img src="/imgs/card_back_large.png" alt="">
+            {% endfor %}
             <p>L'avversario ha {{ enemy_cards_count }} carte</p>
         </div>
-        <div>
+        <div class="deck">
             <form method="GET" action="/">
-                <img src="" alt="">
-                <input type="hidden" name="action" value="draw"/>
-                <input type="submit" value="Pesca dal mazzo"/>
+                <img src="/imgs/card_back_large.png" alt="">
+                <input type="hidden" name="action" value="draw" />
+                <input type="submit" value="Pesca dal mazzo" {% if not can_draw %} disabled {% endif %}/>
             </form>
         </div>
-        <div>
-            <p>{{ last_played_card }}</p>
+        <div class="played-card">
+            {% if winner == "player" %}
+                <p>Hai vinto!</p>
+            {% elif winner == "opponent" %}
+                <p>Hai perso...</p>
+            {% endif %}
+            <img src="/imgs/{{ last_played_card['color'] }}_{{ last_played_card['value'] }}_large.png" alt="">
+        </div>
+        <div class="player-actions">
+            <form method="GET" action="/">
+                <input type="hidden" name="action" value="pass" />
+                <input type="submit" value="Pass" {% if not can_pass %} disabled {% endif %}/>
+            </form>       
+            {% if player_cards_count == 1 %}
+                <form method="GET" action="/">
+                    <input type="hidden" name="action" value="uno" />
+                    <input type="submit" value="UNO!" />
+                </form>
+            {% endif %}
         </div>
         <div>
-            <form method="POST" action="/">
+            <form class="player-hand" method="POST" action="/">
                 {% for card in player_cards %}
-                    <img src="" alt="">
-                    <input type="submit" value="{{ card }}" name="played_card" style="background-color: red;">
+                    <input 
+                        type="submit" 
+                        value="{{ card['value'] + ' ' + card['color'] }}" 
+                        name="played_card" 
+                        style="background-image: url('/imgs/{{ card['color'] }}_{{ card['value'] }}_large.png')" 
+                        {% if not can_play %} disabled {% endif %}>
                 {% endfor %}
             </form>
         </div>
