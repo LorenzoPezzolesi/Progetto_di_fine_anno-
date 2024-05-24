@@ -31,14 +31,13 @@ def shuffle_deck(deck: list[dict]):
         random.shuffle(deck)
     return deck
 
-#Non capito bene
 def get_last_played_card():
     if len(played_cards) == 0:
         return "Nessuna"
     else:
         return played_cards[-1]
 
-deck = shuffle_deck(create_deck()) #-->non capito bene
+deck = shuffle_deck(create_deck()) 
 
 #Carte dell'avversario
 opponent_cards = []
@@ -62,7 +61,7 @@ app = Flask(__name__, static_url_path='')
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # Indico che last_player_name è una variabile globale
+    # Indico che last_player_name, turn_count turn_player_said_uno sono variabili globali
     global last_player_name
     global turn_count
     global turn_player_said_uno
