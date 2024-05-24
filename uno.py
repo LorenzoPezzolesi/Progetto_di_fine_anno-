@@ -61,7 +61,7 @@ app = Flask(__name__, static_url_path='')
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # Indico che last_player_name, turn_count turn_player_said_uno sono variabili globali
+    # Indico che last_player_name, turn_count e turn_player_said_uno sono variabili globali
     global last_player_name
     global turn_count
     global turn_player_said_uno
